@@ -2,7 +2,7 @@
 
 Let's build a desktop chat application that streams responses from an LLM. We'll use three key libraries that work beautifully together:
 
-- **[Pyloid](https://github.com/pyloid/pyloid)**: Creates native desktop windows
+- **[Pyloid](https://github.com/pyloid/pyloid)**: Creates native desktop applications -- like Electron but with Python
 - **[Gradio](https://gradio.app)**: Builds the chat interface
 - **[Promptic](https://github.com/knowsuchagency/promptic)**: Handles LLM interactions
 
