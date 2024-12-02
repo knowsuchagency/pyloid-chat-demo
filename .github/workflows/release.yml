@@ -21,12 +21,11 @@ jobs:
         with:
           python-version: '3.12'
           
-      - name: Install Dependencies
-        run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          git clone https://mpr.makedeb.org/just
-          cd just
-          makedeb -si
+      - name: Install just
+        uses: extractions/setup-just@v1
+        
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
           
       - name: Get version from pyproject.toml
         id: get_version
