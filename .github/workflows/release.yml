@@ -15,6 +15,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Get Version
+        id: get_version
+        run: |
+          VERSION=$(grep "version = " pyproject.toml | cut -d'"' -f2)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
       
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -27,11 +33,6 @@ jobs:
       - name: Install uv
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
           
-      - name: Get version from pyproject.toml
-        id: get_version
-        run: |
-          VERSION=$(grep "version = " pyproject.toml | cut -d'"' -f2)
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
       
       - name: Build binary
         run: just build
