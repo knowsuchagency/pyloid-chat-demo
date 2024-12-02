@@ -6,6 +6,12 @@ Let's build a desktop chat application that streams responses from an LLM. We'll
 - **[Gradio](https://gradio.app)**: Builds the chat interface
 - **[Promptic](https://github.com/knowsuchagency/promptic)**: Handles LLM interactions
 
+
+
+https://github.com/user-attachments/assets/74b2834b-3702-4b31-8a43-79ada47ecf01
+
+
+
 ## Prerequisites
 
 Before running the application, you'll need:
