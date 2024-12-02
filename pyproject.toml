@@ -1,0 +1,18 @@
+[project]
+name = "promptic-gradio"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "gradio>=5.3.0",
+    "promptic",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pyloid>=0.17.4",
+]
+
+[tool.uv.sources]
+promptic = { git = "https://github.com/knowsuchagency/promptic.git", tag = "v2.1.0" }
