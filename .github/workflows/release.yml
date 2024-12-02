@@ -18,8 +18,13 @@ jobs:
 
       - name: Get Version
         id: get_version
+        shell: bash
         run: |
-          VERSION=$(grep "version = " pyproject.toml | cut -d'"' -f2)
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            VERSION=$(grep "version = " pyproject.toml | tr -d '"' | awk '{print $3}')
+          else
+            VERSION=$(grep "version = " pyproject.toml | cut -d'"' -f2)
+          fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
       
       - name: Set up Python
