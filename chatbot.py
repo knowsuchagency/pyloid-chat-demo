@@ -14,12 +14,12 @@ class Config:
     def __init__(self):
         self.config_dir.mkdir(parents=True, exist_ok=True)
         with shelve.open(str(self.config_path)) as db:
-            db.setdefault(self.key, '')
+            db.setdefault(self.key, "")
 
     def get_api_key(self):
         try:
             with shelve.open(str(self.config_path)) as db:
-                result = db.get(self.key, '')
+                result = db.get(self.key, "")
                 litellm.api_key = result
                 return result
         except Exception:
@@ -32,6 +32,7 @@ class Config:
 
 
 config = Config()
+
 
 @llm(
     memory=True,
