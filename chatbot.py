@@ -9,38 +9,35 @@ from promptic import llm
 class Config:
     config_dir = Path.home() / ".demo"
     config_path = config_dir / "config.db"
+    key = "api_key"
 
     def __init__(self):
-        if not self.config_dir.exists():
-            print(f"Creating config directory {self.config_dir}")
-            self.config_dir.mkdir(parents=True, exist_ok=True)
-        # Initialize database with empty API key if it doesn't exist
+        self.config_dir.mkdir(parents=True, exist_ok=True)
         with shelve.open(str(self.config_path)) as db:
-            if 'api_key' not in db:
-                db['api_key'] = ''
+            db.setdefault(self.key, '')
 
     def get_api_key(self):
         try:
             with shelve.open(str(self.config_path)) as db:
-                result = db.get('api_key', '')
-                print(f"api key = {result}")
-                return result
+                return db.get(self.key, '')
         except Exception:
-            print(f"Config file {self.config_path} does not exist")
             return ""
 
-    def set_api_key(self, api_key):
+    def set_api_key(self, value):
         with shelve.open(str(self.config_path)) as db:
-            db['api_key'] = api_key
-            litellm.api_key = api_key
-            print(f"API key set to {api_key}")
+            db[self.key] = value
+            litellm.api_key = value
+
+    @property
+    def api_key(self):
+        return self.get_api_key()
 
 config = Config()
 
 @llm(
     memory=True,
     stream=True,
-    api_key=config.get_api_key(),
+    api_key=config.api_key,
 )
 def assistant(message):
     """{message}"""
@@ -60,7 +57,7 @@ with gr.ChatInterface(
     chat_interface.chatbot.clear(assistant.clear)
 
 with gr.Blocks() as settings_interface:
-    api_key = gr.Textbox(label="API Key", value=config.get_api_key())
+    api_key = gr.Textbox(label="API Key", value=config.api_key)
     api_key.change(config.set_api_key, api_key)
 
 demo = gr.TabbedInterface([chat_interface, settings_interface], ["Chat", "Settings"])
