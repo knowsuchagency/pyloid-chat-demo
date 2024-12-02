@@ -1,0 +1,71 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install Dependencies
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          curl -LsSf https://just.systems/install.sh | sh
+          
+      - name: Get version from pyproject.toml
+        id: get_version
+        run: |
+          VERSION=$(grep "version = " pyproject.toml | cut -d'"' -f2)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      
+      - name: Build binary
+        run: just build
+        
+      - name: Rename binary for platform
+        shell: bash
+        run: |
+          cd dist
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            mv app.exe app-windows.exe
+          elif [ "${{ matrix.os }}" = "macos-latest" ]; then
+            mv app app-macos
+          else
+            mv app app-linux
+          fi
+          
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries-${{ matrix.os }}
+          path: dist/app-*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          files: |
+            binaries-*/app-*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
