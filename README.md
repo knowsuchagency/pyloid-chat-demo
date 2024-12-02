@@ -48,6 +48,7 @@ The code above:
 - Uses Promptic's `@llm` decorator to handle LLM interactions
 - Implements streaming responses using a generator
 - Creates a chat interface with Gradio
+- By passing `memory=True`, `promptic` will manage conversation history
 
 ## Making It a Desktop App
 
