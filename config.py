@@ -5,8 +5,8 @@ import litellm
 
 
 class Config:
-    config_dir = Path.home() / ".demo"
-    config_path = config_dir / "config.db"
+    config_dir = Path.home() / ".config" / "pyloid_demo"
+    config_path = config_dir / "config"
     key = "api_key"
 
     def __init__(self):

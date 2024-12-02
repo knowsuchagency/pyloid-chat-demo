@@ -9,3 +9,6 @@ build:
 
 open:
     open dist/app/app
+
+reset-config:
+    rm -rf .config/pyloid_demo

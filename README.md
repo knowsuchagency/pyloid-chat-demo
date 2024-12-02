@@ -18,7 +18,7 @@ A desktop chat application built with Pyloid, Gradio, and Promptic, demonstratin
 - [`just` command runner](https://github.com/casey/just)
 - An [OpenAI API key](https://platform.openai.com/api-keys)
 
-## Installation
+## Usage
 
 1. Clone the repository:
 
@@ -26,17 +26,8 @@ A desktop chat application built with Pyloid, Gradio, and Promptic, demonstratin
 git clone https://github.com/knowsuchagency/pyloid-chat-demo.git
 ```
 
-2. Install dependencies:
+2. Run the application:
 
 ```bash
-uv sync
-```
-
-## Usage
-
-The project includes several commands (defined in the justfile) for common operations:
-
-- `pyloid` - Run the application
-- `format` - Format the code using Ruff
-- `build` - Build the application using PyInstaller
-- `open` - Open the built application
+# Build and open the application
+just build open
