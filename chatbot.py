@@ -19,7 +19,9 @@ class Config:
     def get_api_key(self):
         try:
             with shelve.open(str(self.config_path)) as db:
-                return db.get(self.key, '')
+                result = db.get(self.key, '')
+                litellm.api_key = result
+                return result
         except Exception:
             return ""
 
@@ -28,16 +30,12 @@ class Config:
             db[self.key] = value
             litellm.api_key = value
 
-    @property
-    def api_key(self):
-        return self.get_api_key()
 
 config = Config()
 
 @llm(
     memory=True,
     stream=True,
-    api_key=config.api_key,
 )
 def assistant(message):
     """{message}"""
@@ -57,7 +55,7 @@ with gr.ChatInterface(
     chat_interface.chatbot.clear(assistant.clear)
 
 with gr.Blocks() as settings_interface:
-    api_key = gr.Textbox(label="API Key", value=config.api_key)
+    api_key = gr.Textbox(label="API Key", value=config.get_api_key())
     api_key.change(config.set_api_key, api_key)
 
 demo = gr.TabbedInterface([chat_interface, settings_interface], ["Chat", "Settings"])

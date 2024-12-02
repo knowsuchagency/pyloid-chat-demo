@@ -5,9 +5,12 @@ import time
 import socket
 from contextlib import contextmanager
 
+HOST = "127.0.0.1"
+PORT = 7861
+
 
 def run_demo():
-    demo.launch(server_name="127.0.0.1", server_port=7860, share=False)
+    demo.launch(server_name=HOST, server_port=PORT, share=False, show_api=False,)
 
 
 # Create and start demo thread
@@ -19,7 +22,7 @@ app = Pyloid(app_name="Pyloid-App", single_instance=True)
 win = app.create_window("pyloid-example")
 
 @contextmanager
-def wait_for_server(host="127.0.0.1", port=7860, timeout=30):
+def wait_for_server(host=HOST, port=PORT, timeout=30):
     start_time = time.time()
     while True:
         try:
@@ -37,7 +40,7 @@ def wait_for_server(host="127.0.0.1", port=7860, timeout=30):
     yield
 
 with wait_for_server():
-    win.load_url("http://localhost:7860")
+    win.load_url(f"http://{HOST}:{PORT}")
     win.show_and_focus()
 
 app.run()
