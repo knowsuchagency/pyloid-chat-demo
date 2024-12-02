@@ -6,6 +6,13 @@ Let's build a desktop chat application that streams responses from an LLM. We'll
 - **[Gradio](https://gradio.app)**: Builds the chat interface
 - **[Promptic](https://github.com/knowsuchagency/promptic)**: Handles LLM interactions
 
+## Prerequisites
+
+Before running the application, you'll need:
+- An OpenAI API key ([get one here](https://platform.openai.com/api-keys))
+- [uv](https://github.com/astral-sh/uv) for Python package management
+- [just](https://github.com/casey/just) command runner
+
 ## The Chat Interface
 
 First, let's create the chat interface. This is where Gradio and Promptic work together:

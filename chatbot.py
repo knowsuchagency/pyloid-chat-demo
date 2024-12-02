@@ -28,7 +28,7 @@ with gr.ChatInterface(
     chat_interface.chatbot.clear(assistant.clear)
 
 with gr.Blocks() as settings_interface:
-    api_key = gr.Textbox(label="API Key", value=config.get_api_key())
+    api_key = gr.Textbox(label="OpenAI API Key", value=config.get_api_key())
     api_key.change(config.set_api_key, api_key)
 
 demo = gr.TabbedInterface([chat_interface, settings_interface], ["Chat", "Settings"])
