@@ -8,7 +8,7 @@ build:
     uv run pyinstaller app.spec --noconfirm
 
 open:
-    open dist/app/app
+    open dist/app
 
 reset-config:
     rm -rf .config/pyloid_demo
