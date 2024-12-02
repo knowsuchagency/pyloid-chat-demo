@@ -27,10 +27,7 @@ First, let's create the chat interface. This is where Gradio and Promptic work t
 import gradio as gr
 from promptic import llm
 
-@llm(
-    memory=True,
-    stream=True,
-)
+@llm(memory=True, stream=True)
 def assistant(message):
     """{message}"""
 

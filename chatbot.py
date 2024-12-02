@@ -6,10 +6,7 @@ from config import Config
 config = Config()
 
 
-@llm(
-    memory=True,
-    stream=True,
-)
+@llm(memory=True, stream=True)
 def assistant(message):
     """{message}"""
 
