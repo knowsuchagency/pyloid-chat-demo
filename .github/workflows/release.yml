@@ -60,6 +60,9 @@ jobs:
           name: binaries-${{ matrix.os }}
           path: dist/app-*
 
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -71,8 +74,8 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.get_version.outputs.version }}
-          name: Release v${{ steps.get_version.outputs.version }}
+          tag_name: v${{ needs.build.outputs.version }}
+          name: Release v${{ needs.build.outputs.version }}
           draft: false
           prerelease: false
           generate_release_notes: true
