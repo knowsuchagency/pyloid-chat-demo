@@ -71,8 +71,8 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.get_version.outputs.version }}
-          files: |
-            binaries-*/app-*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: Release v${{ steps.get_version.outputs.version }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
